@@ -8,6 +8,8 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using PhoneApp1.Resources;
+// Directive for the ViewModel.
+using LocalDatabaseSample.Model;
 
 namespace PhoneApp1
 {
@@ -18,9 +20,46 @@ namespace PhoneApp1
         {
             InitializeComponent();
 
+            // Set the page DataContext property to the ViewModel.
+            this.DataContext = App.ViewModel;
+
             // Sample code to localize the ApplicationBar
             //BuildLocalizedApplicationBar();
         }
+
+
+
+        private void newTaskAppBarButton_Click(object sender, EventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/NewTaskPage.xaml", UriKind.Relative));
+        }
+
+
+        private void deleteTaskButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Cast the parameter as a button.
+            var button = sender as Button;
+
+            if (button != null)
+            {
+                // Get a handle for the to-do item bound to the button.
+                ToDoItem toDoForDelete = button.DataContext as ToDoItem;
+
+                App.ViewModel.DeleteToDoItem(toDoForDelete);
+            }
+
+            // Put the focus back to the main page.
+            this.Focus();
+        }
+
+        protected override void OnNavigatedFrom(System.Windows.Navigation.NavigationEventArgs e)
+        {
+            // Save changes to the database.
+            App.ViewModel.SaveChangesToDB();
+        }
+
+
+
 
         // Sample code for building a localized ApplicationBar
         //private void BuildLocalizedApplicationBar()
