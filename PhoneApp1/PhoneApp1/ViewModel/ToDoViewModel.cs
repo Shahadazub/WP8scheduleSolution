@@ -96,6 +96,18 @@ namespace LocalDatabaseSample.ViewModel
             }
         }
 
+        // Collection associated with the Schedule.
+        private ObservableCollection<ScheduleTable> _scheduleItems;
+        public ObservableCollection<ScheduleTable> ScheduleItems
+        {
+            get { return _scheduleItems; }
+            set
+            {
+                _scheduleItems = value;
+                NotifyPropertyChanged("ScheduleItems");
+            }
+        }
+
         // A list of all categories, used by the add task page.
         private List<ToDoCategory> _categoriesList;
         public List<ToDoCategory> CategoriesList
@@ -116,14 +128,21 @@ namespace LocalDatabaseSample.ViewModel
         public void LoadCollectionsFromDatabase()
         {
 
+            var ItemsInDB = from ScheduleTable line in toDoDB.Schedule
+                            select line;
+
+            ScheduleItems = new ObservableCollection<ScheduleTable>(ItemsInDB);
+
+            
+
             // Specify the query for all to-do items in the database.
-            var toDoItemsInDB = from ToDoItem todo in toDoDB.Items
+            /*var toDoItemsInDB = from ToDoItem todo in toDoDB.Items
                                 select todo;
 
             // Query the database and load all to-do items.
-            AllToDoItems = new ObservableCollection<ToDoItem>(toDoItemsInDB);
+            AllToDoItems = new ObservableCollection<ToDoItem>(toDoItemsInDB);*/
 
-            // Specify the query for all categories in the database.
+            /*// Specify the query for all categories in the database.
             var toDoCategoriesInDB = from ToDoCategory category in toDoDB.Categories
                                      select category;
 
@@ -148,7 +167,7 @@ namespace LocalDatabaseSample.ViewModel
             }
 
             // Load a list of all categories.
-            CategoriesList = toDoDB.Categories.ToList();
+            CategoriesList = toDoDB.Categories.ToList();*/
 
         }
 
@@ -156,7 +175,7 @@ namespace LocalDatabaseSample.ViewModel
 
 
         // Add a to-do item to the database and collections.
-        public void AddToDoItem(ToDoItem newToDoItem)
+        /*public void AddToDoItem(ToDoItem newToDoItem)
         {
             // Add a to-do item to the data context.
             toDoDB.Items.InsertOnSubmit(newToDoItem);
@@ -216,7 +235,7 @@ namespace LocalDatabaseSample.ViewModel
 
             // Save changes to the database.
             toDoDB.SubmitChanges();
-        }
+        }*/
 
 
 

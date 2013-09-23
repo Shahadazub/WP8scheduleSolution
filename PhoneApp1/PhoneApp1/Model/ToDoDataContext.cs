@@ -263,6 +263,137 @@ namespace LocalDatabaseSample.Model
     }
 
 
+    [Table]
+    public class ScheduleTable : INotifyPropertyChanged, INotifyPropertyChanging
+    {
+        // Define ID: private field, public property, and database column.
+        private int _schitemId;
+
+        [Column(IsPrimaryKey = true, IsDbGenerated = true, DbType = "INT NOT NULL Identity", CanBeNull = false, AutoSync = AutoSync.OnInsert)]
+        public int SchItemId
+        {
+            get { return _schitemId; }
+            set
+            {
+                if (_schitemId != value)
+                {
+                    NotifyPropertyChanging("SchItemId");
+                    _schitemId = value;
+                    NotifyPropertyChanged("SchItemId");
+                }
+            }
+        }
+        
+        // Define Time: private field, public property, and database column.
+        private string _schTime;
+
+        [Column]
+        public string SchTime
+        {
+            get { return _schTime; }
+            set
+            {
+                if (_schTime != value)
+                {
+                    NotifyPropertyChanging("SchTime");
+                    _schTime = value;
+                    NotifyPropertyChanged("SchTime");
+                }
+            }
+        }
+        
+        // Define Corp: private field, public property, and database column.
+        private string _corp;
+
+        [Column]
+        public string SchCorp
+        {
+            get { return _corp; }
+            set
+            {
+                if (_corp != value)
+                {
+                    NotifyPropertyChanging("Corp");
+                    _corp = value;
+                    NotifyPropertyChanged("Corp");
+                }
+            }
+        }
+
+        // Define Metro: private field, public property, and database column.
+        private string _metro;
+
+        [Column]
+        public string SchMetro
+        {
+            get { return _metro; }
+            set
+            {
+                if (_metro != value)
+                {
+                    NotifyPropertyChanging("SchMetro");
+                    _metro = value;
+                    NotifyPropertyChanged("SchMetro");
+                }
+            }
+        }
+        
+        // Define Direction: private field, public property, and database column.
+        private string _direction;
+
+        [Column]
+        public string SchDirection
+        {
+            get { return _direction; }
+            set
+            {
+                if (_direction != value)
+                {
+                    NotifyPropertyChanging("SchDirection");
+                    _direction = value;
+                    NotifyPropertyChanged("SchDirection");
+                }
+            }
+        }
+
+
+
+
+        #region INotifyPropertyChanged Members
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        // Used to notify that a property changed
+        private void NotifyPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        #endregion
+
+        #region INotifyPropertyChanging Members
+
+        public event PropertyChangingEventHandler PropertyChanging;
+
+        // Used to notify that a property is about to change
+        private void NotifyPropertyChanging(string propertyName)
+        {
+            if (PropertyChanging != null)
+            {
+                PropertyChanging(this, new PropertyChangingEventArgs(propertyName));
+            }
+        }
+
+        #endregion
+
+
+    }
+
+
+
 
 
     public class ToDoDataContext : DataContext
@@ -273,10 +404,14 @@ namespace LocalDatabaseSample.Model
         { }
 
         // Specify a table for the to-do items.
-        public Table<ToDoItem> Items;
+        //public Table<ToDoItem> Items;
 
         // Specify a table for the categories.
-        public Table<ToDoCategory> Categories;
+        //public Table<ToDoCategory> Categories;
+
+
+        // Specify a table for the Schedule.
+        public Table<ScheduleTable> Schedule;
     }
 
 

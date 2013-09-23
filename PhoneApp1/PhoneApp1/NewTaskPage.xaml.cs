@@ -35,7 +35,7 @@ namespace PhoneApp1
                 };
 
                 // Add the item to the ViewModel.
-                App.ViewModel.AddToDoItem(newToDoItem);
+                //App.ViewModel.AddToDoItem(newToDoItem);
 
                 // Return to the main page.
                 if (NavigationService.CanGoBack)

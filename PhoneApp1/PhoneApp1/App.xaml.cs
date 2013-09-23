@@ -69,7 +69,8 @@ namespace PhoneApp1
 
 
             // Specify the local database connection string.
-            string DBConnectionString = "Data Source=isostore:/ToDo.sdf";
+            //string DBConnectionString = "Data Source=isostore:/ToDo2.sdf";
+            string DBConnectionString = "Data Source='appdata:/ToDo2.sdf'; File Mode = read only;";
 
             // Create the database if it does not exist.
             using (ToDoDataContext db = new ToDoDataContext(DBConnectionString))
@@ -80,12 +81,12 @@ namespace PhoneApp1
                     db.CreateDatabase();
 
                     // Prepopulate the categories.
-                    db.Categories.InsertOnSubmit(new ToDoCategory { Name = "Home" });
+                    /*db.Categories.InsertOnSubmit(new ToDoCategory { Name = "Home" });
                     db.Categories.InsertOnSubmit(new ToDoCategory { Name = "Work" });
-                    db.Categories.InsertOnSubmit(new ToDoCategory { Name = "Hobbies" });
+                    db.Categories.InsertOnSubmit(new ToDoCategory { Name = "Hobbies" });*/
 
                     // Save categories to the database.
-                    db.SubmitChanges();
+                    //db.SubmitChanges();
                 }
             }
 

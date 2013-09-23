@@ -23,6 +23,8 @@ namespace PhoneApp1
             // Set the page DataContext property to the ViewModel.
             this.DataContext = App.ViewModel;
 
+            
+
             // Sample code to localize the ApplicationBar
             //BuildLocalizedApplicationBar();
         }
@@ -31,7 +33,7 @@ namespace PhoneApp1
 
         private void newTaskAppBarButton_Click(object sender, EventArgs e)
         {
-            NavigationService.Navigate(new Uri("/NewTaskPage.xaml", UriKind.Relative));
+            //NavigationService.Navigate(new Uri("/NewTaskPage.xaml", UriKind.Relative));
         }
 
 
@@ -45,7 +47,7 @@ namespace PhoneApp1
                 // Get a handle for the to-do item bound to the button.
                 ToDoItem toDoForDelete = button.DataContext as ToDoItem;
 
-                App.ViewModel.DeleteToDoItem(toDoForDelete);
+                //App.ViewModel.DeleteToDoItem(toDoForDelete);
             }
 
             // Put the focus back to the main page.

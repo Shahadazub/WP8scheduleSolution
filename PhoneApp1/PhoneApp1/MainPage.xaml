@@ -51,6 +51,18 @@
                 </Button>
             </Grid>
         </DataTemplate>
+    
+
+    
+        <DataTemplate x:Key="ScheduleItemTemplate">
+
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Name="Time"  FontSize="50" Margin="10,0,10,0" Width="120" VerticalAlignment="Center" Text="{Binding SchTime}"/>
+                <Image Source="{Binding SchMetro}"></Image>
+                <Image Source="{Binding SchDirection}"></Image>
+                <TextBlock Name="Firm" FontSize="50" VerticalAlignment="Center" Text="{Binding SchCorp}" />
+            </StackPanel>
+        </DataTemplate>
     </phone:PhoneApplicationPage.Resources>
 
     <!--LayoutRoot is the root grid where all page content is placed.-->
@@ -72,7 +84,7 @@
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
             <controls:Pivot Margin="0, -36, 0, 0">
 
-                <controls:PivotItem Header="all">
+                <!--<controls:PivotItem Header="all">
                     <ListBox 
                         x:Name="allToDoItemsListBox" 
                         ItemsSource="{Binding AllToDoItems}" 
@@ -102,6 +114,14 @@
                         ItemsSource="{Binding HobbiesToDoItems}" 
                         Margin="12, 0, 12, 0" Width="440" 
                         ItemTemplate="{StaticResource ToDoListBoxItemTemplate}" />
+                </controls:PivotItem>-->
+
+                <controls:PivotItem Header="Schedule">
+                    <ListBox 
+                        x:Name="allToDoItemsListBox" 
+                        ItemsSource="{Binding ScheduleItems}" 
+                        Margin="12, 0, 12, 0" Width="440" 
+                        ItemTemplate="{StaticResource ScheduleItemTemplate}" />
                 </controls:PivotItem>
 
             </controls:Pivot>
