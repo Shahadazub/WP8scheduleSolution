@@ -13,50 +13,56 @@ using LocalDatabaseSample.Model;
 
 namespace PhoneApp1
 {
-    public partial class MainPage : PhoneApplicationPage
+    public partial class SchedulesPage : PhoneApplicationPage
     {
-        
-        
+
+
         // Constructor
-        public MainPage()
+        public SchedulesPage()
         {
             InitializeComponent();
 
             // Set the page DataContext property to the ViewModel.
             this.DataContext = App.ViewModel;
 
-            
+
 
             // Sample code to localize the ApplicationBar
             //BuildLocalizedApplicationBar();
         }
 
-        private void MainPageClickHandler(object sender, RoutedEventArgs e)
+
+
+        private void BackButton_Click(object sender, EventArgs e)
         {
-            var button = (Button) sender;
-            switch(button.Name)
-            {
-                case "PuprpleSchBut":
-                    NavigationService.Navigate(new Uri("/SchedulesPage.xaml", UriKind.Relative));
-                    break;
-                case "GreenSchBut":
-                    NavigationService.Navigate(new Uri("/SchedulesPage.xaml", UriKind.Relative));
-                    break;
-                case "BlueSchBut":
-                    NavigationService.Navigate(new Uri("/SchedulesPage.xaml", UriKind.Relative));
-                    break;
-                case "NextBlueBut":
-                    break;
-                case "NextGreenBut":
-                    break;
-                case "NextPurpleBut":
-                    break;
-            }
+            NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
         }
 
 
+        private void deleteTaskButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Cast the parameter as a button.
+            var button = sender as Button;
 
-        
+            if (button != null)
+            {
+                // Get a handle for the to-do item bound to the button.
+                ToDoItem toDoForDelete = button.DataContext as ToDoItem;
+
+                //App.ViewModel.DeleteToDoItem(toDoForDelete);
+            }
+
+            // Put the focus back to the main page.
+            this.Focus();
+        }
+
+        protected override void OnNavigatedFrom(System.Windows.Navigation.NavigationEventArgs e)
+        {
+            // Save changes to the database.
+            App.ViewModel.SaveChangesToDB();
+        }
+
+
 
 
         // Sample code for building a localized ApplicationBar

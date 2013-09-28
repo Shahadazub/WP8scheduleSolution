@@ -107,6 +107,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AppResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="SchedulesPage.xaml.cs">
+      <DependentUpon>SchedulesPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\ToDoViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -119,6 +122,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="NewTaskPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SchedulesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

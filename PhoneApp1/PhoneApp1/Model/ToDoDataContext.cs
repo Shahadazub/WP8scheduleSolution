@@ -356,7 +356,59 @@ namespace LocalDatabaseSample.Model
             }
         }
 
+        // Define ColorOfROw: private field, public property, and database column.
+        private string _schColor;
 
+        [Column]
+        public string SchColor
+        {
+            get { return _schColor; }
+            set
+            {
+                if (_schColor != value)
+                {
+                    NotifyPropertyChanging("SchColor");
+                    _schColor = value;
+                    NotifyPropertyChanged("SchColor");
+                }
+            }
+        }
+
+       // Define ColorOfROw: private field, public property, and database column.
+        private DateTime _schColorTime;
+
+        [Column]
+        public DateTime SchColorTime
+        {
+            get { return _schColorTime; }
+            set
+            {
+                if (_schColorTime != value)
+                {
+                    NotifyPropertyChanging("SchColorTime");
+                    _schColorTime = value;
+                    NotifyPropertyChanged("SchColorTime");
+                }
+            }
+        }
+
+        // Define ColorOfROw: private field, public property, and database column.
+        private int _schFriday;
+
+        [Column]
+        public int SchFriday
+        {
+            get { return _schFriday; }
+            set
+            {
+                if (_schFriday != value)
+                {
+                    NotifyPropertyChanging("SchFriday");
+                    _schFriday = value;
+                    NotifyPropertyChanged("SchFriday");
+                }
+            }
+        }
 
 
         #region INotifyPropertyChanged Members

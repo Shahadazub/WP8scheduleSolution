@@ -2,9 +2,11 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System;
 
 // Directive for the data model.
 using LocalDatabaseSample.Model;
+
 
 
 namespace LocalDatabaseSample.ViewModel
@@ -14,6 +16,7 @@ namespace LocalDatabaseSample.ViewModel
         // LINQ to SQL data context for the local database.
         private ToDoDataContext toDoDB;
 
+        public DateTime NowTime = DateTime.Now;
         // Class constructor, create the data context object.
         public ToDoViewModel(string toDoDBConnectionString)
         {
@@ -98,15 +101,53 @@ namespace LocalDatabaseSample.ViewModel
 
         // Collection associated with the Schedule.
         private ObservableCollection<ScheduleTable> _scheduleItems;
-        public ObservableCollection<ScheduleTable> ScheduleItems
+        public ObservableCollection<ScheduleTable> scheduleItems
         {
             get { return _scheduleItems; }
             set
             {
                 _scheduleItems = value;
-                NotifyPropertyChanged("ScheduleItems");
+                NotifyPropertyChanged("scheduleItems");
             }
         }
+
+        // Collection associated with the Schedule.
+        private ObservableCollection<ScheduleTable> _fridayScheduleItems;
+        public ObservableCollection<ScheduleTable> FridayScheduleItems
+        {
+            get { return _fridayScheduleItems; }
+            set
+            {
+                _fridayScheduleItems = value;
+                NotifyPropertyChanged("FridayScheduleItems");
+            }
+        }
+
+         // Collection associated with the Schedule.
+        private ObservableCollection<ScheduleTable> _notFridayScheduleItems;
+        public ObservableCollection<ScheduleTable> NotFridayScheduleItems
+        {
+            get { return _notFridayScheduleItems; }
+            set
+            {
+                _notFridayScheduleItems = value;
+                NotifyPropertyChanged("NotFridayScheduleItems");
+            }
+        }
+
+        // Schredule items associated with the Green Not Friday category.
+        private ObservableCollection<ScheduleTable> _collectionForScheduleItems;
+        public ObservableCollection<ScheduleTable> CollectionForScheduleItems
+        {
+            get { return _collectionForScheduleItems; }
+            set
+            {
+                _collectionForScheduleItems = value;
+                NotifyPropertyChanged("CollectionForScheduleItems");
+            }
+        }
+
+        
 
         // A list of all categories, used by the add task page.
         private List<ToDoCategory> _categoriesList;
@@ -120,8 +161,38 @@ namespace LocalDatabaseSample.ViewModel
             }
         }
 
-        
-        
+
+        public ObservableCollection<ScheduleTable> GetTheRowColor(ScheduleTable line)
+        {            
+                if (line.SchColorTime.Hour < NowTime.Hour)
+                {
+                    line.SchColor = "Red";
+                    scheduleItems = new ObservableCollection<ScheduleTable>(CollectionForScheduleItems);
+
+                }
+                else
+                {
+                    if (line.SchColorTime.Hour == NowTime.Hour)
+                    {
+                        if (line.SchColorTime.Minute > NowTime.Hour)
+                        {
+                            line.SchColor = "Green";
+                            scheduleItems = new ObservableCollection<ScheduleTable>(CollectionForScheduleItems);
+                        }
+                        else
+                        {
+                            line.SchColor = "Green";
+                            scheduleItems = new ObservableCollection<ScheduleTable>(CollectionForScheduleItems);
+                        }
+                    }
+                    else
+                    {
+                        line.SchColor = "Green";
+                        scheduleItems = new ObservableCollection<ScheduleTable>(CollectionForScheduleItems);
+                    }
+                }
+                return scheduleItems;
+        }
         
         
         // Query database and load the collections and list used by the pivot pages.
@@ -131,8 +202,21 @@ namespace LocalDatabaseSample.ViewModel
             var ItemsInDB = from ScheduleTable line in toDoDB.Schedule
                             select line;
 
-            ScheduleItems = new ObservableCollection<ScheduleTable>(ItemsInDB);
+            CollectionForScheduleItems = new ObservableCollection<ScheduleTable>(ItemsInDB);
 
+            foreach (ScheduleTable line in ItemsInDB)
+            {
+                switch (line.SchFriday)
+                {
+                    case 0:
+                        FridayScheduleItems = GetTheRowColor(line);
+                        break;
+                    case 1:
+                        NotFridayScheduleItems = GetTheRowColor(line);
+                        break;
+                }
+            }
+          
             
 
             // Specify the query for all to-do items in the database.
